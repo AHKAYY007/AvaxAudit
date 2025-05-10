@@ -1,10 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from db.database import engine
+from app.routers import reports, audits, contracts
 from db import models
 
 app = FastAPI()
-origins = []
+app.include_router(reports.router)
+app.include_router(contracts.router)
+app.include_router(audits.router)
+
+origins = [
+    "http://localhost:3000",
+    #frontend url
+]
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from db.database import engine
+from db import models
 
 app = FastAPI()
 origins = []
@@ -17,3 +19,5 @@ def root():
     return {
         "message": "Hello World"
     }
+
+models.Base.metadata.create_all(engine)

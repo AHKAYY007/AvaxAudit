@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from db.database import engine
 from app.routers import reports, audits, contracts
-from db import models
+from app import models
 
 app = FastAPI()
 app.include_router(reports.router)

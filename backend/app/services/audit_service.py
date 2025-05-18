@@ -1,5 +1,6 @@
 #audit business logic
 
+from fastapi import HTTPException, status
 from typing import Dict, List, Any, Optional
 import datetime
 import logging
@@ -48,8 +49,7 @@ class AuditService:
     async def get_audit(self, audit_id: int, db: AsyncSession) -> Audit:
         audit = await db.get(Audit, audit_id)
         if not audit:
-            logger.error(f"Audit ID '{audit_id}' not found")
-            raise ValueError(f"Audit ID '{audit_id}' not found")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Audit ID '{audit_id}' not found")
         return audit
 
     async def update_audit_status(

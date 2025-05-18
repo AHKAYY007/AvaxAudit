@@ -1,7 +1,7 @@
 #audit initiation and results
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.services.audit_service import AuditService
@@ -18,7 +18,7 @@ audit_service = AuditService()
 
 class AuditRequest(BaseModel):
     contract_id: int
-    analyzers: List[str] = ["slither", "custom"]  # Default analyzers
+    analyzers: List[str] = Field(default_factory=lambda: ["slither", "custom"])  # Default analyzers
     priority: str = "normal"
 
 @router.post("/start")

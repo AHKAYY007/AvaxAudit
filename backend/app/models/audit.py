@@ -1,7 +1,7 @@
 from sqlalchemy.sql.sqltypes import String, DateTime, JSON
 from sqlalchemy import Column, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from app.db.database import Base
+from app.db.base_class import Base
 from sqlalchemy import func
 
 class Audit(Base):

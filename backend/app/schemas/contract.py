@@ -17,3 +17,14 @@ class Contract(ContractBase):
 
     class Config:
         orm_mode = True
+
+class ContractOut(BaseModel):
+    id: int
+    address: str
+    chain: str
+    source_code: Optional[str]
+    bytecode: Optional[str]
+    created_at: datetime
+
+    class Config:
+        orm_mode = True

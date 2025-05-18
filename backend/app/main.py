@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from db.database import engine
-from app.routers import reports, audits, contracts
+from app.db.database import engine
+from app.routers import reports, audits, contracts, vulnerabilities
 from app import models
 
 app = FastAPI()
 app.include_router(reports.router)
 app.include_router(contracts.router)
 app.include_router(audits.router)
+app.include_router(vulnerabilities.router)
 
 origins = [
     "http://localhost:3000",
@@ -28,4 +29,4 @@ def root():
         "message": "Hello World"
     }
 
-models.Base.metadata.create_all(engine)
+# models.Base.metadata.create_all(engine)

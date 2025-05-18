@@ -16,7 +16,7 @@ class Contract(ContractBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ContractOut(BaseModel):
     id: int
@@ -27,4 +27,4 @@ class ContractOut(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+         from_attributes = True

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/avaxaudits
+      - AVALANCHE_MAINNET_URL=https://api.avax.network/ext/bc/C/rpc
+      - AVALANCHE_FUJI_URL=https://api.avax-test.network/ext/bc/C/rpc
+      - SNOWTRACE_API_KEY=${SNOWTRACE_API_KEY}
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  db:
+    image: postgres:14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=avaxaudits
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  postgres_data:

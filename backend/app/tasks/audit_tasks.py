@@ -23,8 +23,8 @@ contract_service = ContractService()
 slither_analyzer = SlitherAnalyzer()
 avax_rules = AvaxRuleEngine()
 mythril_analyzer = MythrilAnalyzer()
-gas_rule_engine = AvaxRuleEngine(rules=ALL_GAS_RULES)
-security_rule_engine = AvaxRuleEngine(rules=ALL_SECURITY_RULES)
+gas_rule_engine = AvaxRuleEngine(ALL_GAS_RULES)
+security_rule_engine = AvaxRuleEngine(ALL_SECURITY_RULES)
 
 ANALYZER_MAP = {
     "slither": slither_analyzer,

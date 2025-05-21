@@ -4,8 +4,8 @@ import re
 class AvaxRuleEngine:
     """Rules specific to Avalanche network."""
     
-    def __init__(self):
-        self.rules = [
+    def __init__(self, rules=None):
+        self.rules = rules or [
             self.check_gas_price_usage,
             self.check_time_assumptions,
             self.check_bridge_security,

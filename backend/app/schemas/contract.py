@@ -20,7 +20,7 @@ class Contract(ContractBase):
 
 class ContractOut(BaseModel):
     id: int
-    address: str
+    address: Optional[str]
     chain: str
     source_code: Optional[str]
     bytecode: Optional[str]

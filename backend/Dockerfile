@@ -16,9 +16,10 @@ RUN pip install --no-cache-dir -r linux-requirements.txt
 # Copy application code
 COPY . .
 
-# Fix alembic.ini - ensure script_location is set correctly
-RUN sed -i '/^\[alembic\]/,/^\[/ s/^#*script_location.*/script_location = alembic/' alembic.ini && \
-    grep -q "script_location = alembic" alembic.ini || echo "script_location = alembic" >> alembic.ini
+# Ensure a properly formatted alembic.ini file
+RUN echo "[alembic]\nscript_location = alembic\n" > alembic.ini.proper && \
+    cat alembic.ini >> alembic.ini.proper && \
+    mv alembic.ini.proper alembic.ini
 
 # Expose port
 EXPOSE 8000

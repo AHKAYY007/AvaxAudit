@@ -1,5 +1,6 @@
 #audit business logic
 
+from app.schemas.vulnerability import VulnerabilityOut
 from fastapi import HTTPException, status
 from typing import Dict, List, Any, Optional
 import datetime
@@ -99,7 +100,7 @@ class AuditService:
             "analyzers": audit.parameters.get("analyzers", []) if audit.parameters else []
         }
         return {
-            "findings": [f.to_dict() for f in findings],
+            "findings": [VulnerabilityOut.from_orm(f).dict() for f in findings],
             "findings_by_severity": severity_counts,
             "summary": summary
         }

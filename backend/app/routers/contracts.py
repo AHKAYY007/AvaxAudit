@@ -55,7 +55,7 @@ async def fetch_contract(
 
 @router.post("/upload")
 async def upload_contract(
-    address: str = Form(...),
+    address: Optional[str] = Form(None), 
     network: str = Form("mainnet"),
     file: UploadFile = File(...),
     contract_name: str = Form(...),
@@ -63,14 +63,18 @@ async def upload_contract(
 ):
     """Upload contract source code directly and store in DB."""
     try:
-        if not re.fullmatch(r'^0x[a-fA-F0-9]{40}$', address):
-            raise HTTPException(status_code=400, detail="Invalid Ethereum address format")
+        if address == "":
+            address = None
+        if address:
+            if not re.fullmatch(r'^0x[a-fA-F0-9]{40}$', address):
+                raise HTTPException(status_code=400, detail="Invalid Ethereum address format")
         content = await file.read()
         if not file.filename.endswith('.sol'):
             raise HTTPException(status_code=400, detail="File must be a Solidity (.sol) file")
         contract_dict = {
             "address": address,
             "chain": network,
+            "contract_name": contract_name,
             "source_code": content.decode('utf-8'),
             "bytecode": None,
         }
@@ -79,6 +83,7 @@ async def upload_contract(
             "contract_id": contract_id,
             "contract_name": contract_name,
             "network": network,
+            "address": address,
             "file_name": file.filename
         }
     except Exception as e:

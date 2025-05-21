@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_async_session
 from app.services.report_service import ReportService
 from typing import List
-from app.schemas.report import ReportOut  # Make sure this exists
+from app.schemas.report import ReportOut
 import logging
 
 logger = logging.getLogger(__name__)

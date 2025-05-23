@@ -59,7 +59,8 @@ async def run_audit_task(audit_id: int, contract_id: int, analyzers: List[str]) 
         findings = []
 
         # Run selected analyzers using the map
-        for analyzer_key in analyzers:
+        total = len(analyzers)
+        for idx, analyzer_key in enumerate(analyzers):
             analyzer = ANALYZER_MAP.get(analyzer_key)
             if not analyzer:
                 logger.warning(f"Unknown analyzer '{analyzer_key}' for audit {audit_id}")
@@ -71,6 +72,9 @@ async def run_audit_task(audit_id: int, contract_id: int, analyzers: List[str]) 
                 findings.extend(result)
             except Exception as analyzer_exc:
                 logger.exception(f"Analyzer '{analyzer_key}' failed for audit {audit_id}: {analyzer_exc}")
+            # Update progress after each analyzer
+            progress = (idx + 1) / total
+            await audit_service.update_progress(audit_id, progress, db)
 
         # Save findings to audit
         await audit_service.store_audit_results(audit_id, findings, db)

@@ -12,7 +12,7 @@ app.include_router(vulnerabilities.router)
 
 origins = [
     "http://localhost:3000",
-    #frontend url
+    "https://avaxaudit.vercel.app/"
 ]
 
 app.add_middleware(

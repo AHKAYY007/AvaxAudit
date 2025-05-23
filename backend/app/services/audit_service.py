@@ -58,7 +58,7 @@ class AuditService:
         audit_id: int, 
         status: str, 
         db: AsyncSession, 
-        progress: Optional[int] = None
+        progress: Optional[float] = None
     ):
         audit = await self.get_audit(audit_id, db)
         audit.status = status
@@ -119,7 +119,7 @@ class AuditService:
         audit.tags.extend(tags)
         await db.commit()
 
-    async def update_progress(self, audit_id: int, progress: int, db: AsyncSession):
+    async def update_progress(self, audit_id: int, progress: float, db: AsyncSession):
         audit = await self.get_audit(audit_id, db)
         audit.progress = progress
         await db.commit()

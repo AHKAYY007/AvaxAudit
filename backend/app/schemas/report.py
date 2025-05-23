@@ -15,7 +15,7 @@ class Report(ReportBase):
     generated_at: datetime
 
     class Config:
-        from_attributes = True  # Use this for Pydantic v2+
+        from_attributes = True
 
 class ReportOut(BaseModel):
     id: int
@@ -25,4 +25,4 @@ class ReportOut(BaseModel):
     created_at: datetime
 
     class Config:
-        from_attributes = True  # Use this for Pydantic v2+
+        from_attributes = True

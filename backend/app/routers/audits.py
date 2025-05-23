@@ -18,7 +18,7 @@ audit_service = AuditService()
 
 class AuditRequest(BaseModel):
     contract_id: int
-    analyzers: List[str] = Field(default_factory=lambda: ["slither", "custom", "mythril", "gas analysis", "security rules"])  # Default analyzers
+    analyzers: List[str] = Field(default_factory=lambda: ["slither", "custom", "mythril", "gas_rules", "security_rules"])
     priority: str = "normal"
 
 @router.post("/start")

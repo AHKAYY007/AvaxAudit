@@ -32,3 +32,4 @@ eth-utils>=5.0.0
 # Common utilities
 typing-extensions>=4.8.0
 colorama>=0.4.6
+aiosmtplib

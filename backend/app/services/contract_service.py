@@ -4,21 +4,19 @@ from app.models.contract import Contract
 from typing import Optional, Dict, Any
 
 class ContractService:
-    async def store_contract(self, contract_details: Dict[str, Any], db: AsyncSession) -> int:
-        """
-        Store a contract in the database.
-        Expects contract_details to include:
-        - address (str)
-        - chain (str)
-        - source_code (str, optional)
-        - bytecode (str, optional)
-        """
-        contract = Contract(
-            address=contract_details.get("address"),
-            chain=contract_details.get("chain"),
-            source_code=contract_details.get("source_code"),
-            bytecode=contract_details.get("bytecode"),
+    async def store_contract(self, contract_dict, db: AsyncSession):
+        # Check if contract already exists
+        query = select(Contract).where(
+            Contract.address == contract_dict["address"],
+            Contract.chain == contract_dict["chain"]
         )
+        result = await db.execute(query)
+        existing = result.scalar_one_or_none()
+        if existing:
+            return existing.id  # Return existing contract's ID
+
+        # If not exists, insert new
+        contract = Contract(**contract_dict)
         db.add(contract)
         await db.commit()
         await db.refresh(contract)

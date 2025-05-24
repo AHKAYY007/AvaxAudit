@@ -19,7 +19,7 @@ class ContractHandler:
             raise EnvironmentError("Missing SNOWTRACE_API_KEY in environment variables.")
 
     def get_api_url(self):
-        return "https://api-testnet.snowtrace.io/api" if self.chain.network == "fuji" else "https://api.snowtrace.io/api"
+        return "https://api-testnet.snowtrace.io/api" if self.chain.network == "fuji" else "https://api.routescan.io/v2/network/mainnet/evm/43114/etherscan/api"
 
     @lru_cache(maxsize=128)
     def get_contract_source(self, address):
@@ -47,6 +47,7 @@ class ContractHandler:
                 logger.warning(f"Contract not verified or not found: {data.get('message', '')}")
                 return None
 
+            # print({'file': data['result'][0]})
             return {
                 "source_code": data["result"][0]["SourceCode"],
                 "contract_name": data["result"][0]["ContractName"],
@@ -64,12 +65,13 @@ class ContractHandler:
             raise ValueError(f"No contract at address {address}")
 
         source_info = self.get_contract_source(address)
+        
         result = {
             "address": address,
             "bytecode": code,
             "chain": self.chain.network,
             "block_number": self.web3.eth.block_number,
-            "source_code": None,
+            "source_code": source_info,
             "contract_name": None,
             "compiler_version": None,
             "optimization": None,

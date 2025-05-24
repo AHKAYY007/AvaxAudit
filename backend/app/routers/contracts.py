@@ -48,7 +48,7 @@ async def fetch_contract(
             "contract_id": contract_id,
             "address": contract_data.address,
             "network": contract_data.network,
-            "has_source": contract_details.get("source_code") is not None,
+            "has_source": contract_details.get("source_code"),
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

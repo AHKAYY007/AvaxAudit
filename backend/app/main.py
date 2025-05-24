@@ -11,7 +11,8 @@ app.include_router(audits.router)
 app.include_router(vulnerabilities.router)
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost|:3000",
+    "http://localhost:8080",
     "https://avaxaudit.vercel.app/"
 ]
 
